@@ -9,6 +9,7 @@
       "@/*": ["./src/*", "./dist/*"]
     },
 
+    "allowSyntheticDefaultImports": true,
     /* Bundler mode */
     "moduleResolution": "Node",
     "allowImportingTsExtensions": true,

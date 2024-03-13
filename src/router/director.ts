@@ -1,5 +1,7 @@
 import MainLayout from "@/layout/MainLayout.vue";
 import Director from "@/pages/director/index.vue";
+import Staff from "@/pages/director/staff/index.vue";
+
 export default {
     path: "/",
     name: "director",
@@ -10,6 +12,11 @@ export default {
             path: "/dashboard",
             name: "Dashboard",
             component: Director
+        },
+        {
+            path: "/staff",
+            name: "Staff",
+            component: Staff
         }
     ]
 }

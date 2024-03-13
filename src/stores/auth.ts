@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { IAuthRequest } from '../interfaces/api-client/auth/IAuthRequest';
 import { apiClient } from "@/modules";
 import router from "@/router";
+
 export const useAuthStore = defineStore({
     id: "auth",
     state: () => ({
@@ -14,16 +15,17 @@ export const useAuthStore = defineStore({
         async login(payload: IAuthRequest) {
             try {
                 const response = await apiClient.auth.login(payload)
-                console.log("u", response);
-
                 if (response?.tokens?.access_token) {
+                    // this.user = response?.user
                     localStorage.setItem("role", response?.user?.role)
                     localStorage.setItem("token", response?.tokens?.access_token)
-                    console.log("oke");
                 }
-                if (response?.user?.role === "admin") {
+                const role = response?.user?.role
+                if (role === "admin") {
                     console.log(1);
                     await router.push("/students")
+                } else if (role === "director") {
+                    await router.push("/dashboard")
                 }
             } catch (error) {
                 console.log("erro", error);

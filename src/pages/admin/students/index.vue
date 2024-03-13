@@ -1,4 +1,10 @@
 <template>
+    <a-button type="primary" @click="showDrawer">
+        <template #icon>
+            <PlusOutlined />
+        </template>
+        New account
+    </a-button>
     <a-table :columns="columns" :data-source="lists['students']" bordered>
         <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'name'">
@@ -21,12 +27,16 @@
 
         <template #footer>Footer</template>
     </a-table>
+    <createStudent :isOpen="createOpen" :onClose="closeDrawerHandler" />
 </template>
 
 <script lang="ts" setup>
 import { useAdminStore } from "@/stores/admin/admin"
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { PlusOutlined } from '@ant-design/icons-vue';
+import { onMounted, ref } from "vue";
+import createStudent from "./createStudent.vue";
+
 const adminStore = useAdminStore();
 
 const { lists } = storeToRefs(adminStore)
@@ -34,6 +44,16 @@ const { lists } = storeToRefs(adminStore)
 onMounted(async () => {
     await adminStore.getAllStudents()
 })
+
+const createOpen = ref<boolean>(false)
+
+const showDrawer = () => {
+    createOpen.value = true
+}
+
+const closeDrawerHandler = () => {
+    createOpen.value = false;
+};
 
 const columns = [
     { title: "First name", dataIndex: "first_name" },

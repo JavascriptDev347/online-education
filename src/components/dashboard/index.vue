@@ -80,20 +80,25 @@
 import { computed, ref } from 'vue';
 import { menu } from '@/constanta/menu';
 import {
-    MenuFoldOutlined, MenuUnfoldOutlined, TeamOutlined
+    MenuFoldOutlined, MenuUnfoldOutlined
 } from "@ant-design/icons-vue";
 const M = MenuFoldOutlined;
 console.log(M);
 
 const collapsed = ref<boolean>(false);
-const current_role = ref("admin")
-const filteredNavLinks = computed(() => {
-    return menu.filter((link) => link.role.includes(current_role.value));
+
+const current_role = localStorage.getItem("role") as string
+const filteredNavLinks: any = computed(() => {
+    return menu.filter((link) => link.role.includes(current_role));
 });
 
 </script>
 
 <style scoped lang="scss">
+header {
+    z-index: 999;
+}
+
 .menu {
     display: flex;
     color: white;

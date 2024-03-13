@@ -43,7 +43,7 @@
                     </text>
                 </g>
             </svg>
-            <h1 class="login-title "> Productive </h1>
+            <h1 class="login-title "> NAJOT TA'LIM </h1>
         </div>
         <div class="auth-form">
             <h2 class="auth-form-title"> Login </h2>
