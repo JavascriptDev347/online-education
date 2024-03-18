@@ -1,2 +1,2 @@
 export * from "./Director"
-export * from "./IDirectorApiClient"
+export * from "./DirectorApiClient"

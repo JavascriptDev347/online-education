@@ -51,7 +51,7 @@
                 @finishFailed="onFinishFailed">
                 <a-form-item label="Phone" name="phone" class="form-label"
                     :rules="[{ required: true, message: 'Please enter your phone number' }]">
-                    <a-input v-model:value="formState.phone" class="p-3" v-mask="'(+998) -\'#\'# -### -\'#\'# -\'#\'#'"
+                    <a-input v-model:value="formState.phone" class="p-3" v-mask="'+998-##-###-##-##'"
                         placeholder="(+998)-93-102-06-36">
                         <template #prefix>
                             <PhoneOutlined class="site-form-item-icon" />
@@ -88,11 +88,11 @@ const authStore = useAuthStore();
 const i = LockOutlined;
 
 const formState = reactive<IAuthRequest>({
-    phone: '',
+    phone: '+998-',
     password: '',
 });
 const onFinish = (values: IAuthRequest) => {
-    authStore.login(values)
+    authStore.login({ password: values.password, phone: values.phone.split("-").join("") })
 
 };
 

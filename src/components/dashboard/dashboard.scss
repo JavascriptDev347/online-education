@@ -1,0 +1,28 @@
+.links {
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 10px;
+    color: theme("colors.text.default");
+    height: 40px;
+    margin: 10px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    padding-left: 5px;
+
+    &:hover {
+      background-color: #f6f7fb;
+      color: theme("colors.text.active");
+    }
+
+    span {
+      font-family: "sf600";
+    }
+  }
+}
+
+.router-link-active {
+  background-color: #f6f7fb;
+  color: theme("colors.text.active") !important;
+}

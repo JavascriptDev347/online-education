@@ -1,91 +1,162 @@
 <template>
-    <a-drawer title="Create a new account" :width="720" :open="isOpen" :body-style="{ paddingBottom: '80px' }"
+    <a-drawer title="Create a new account" :width="540" :open="isOpen" :body-style="{ paddingBottom: '80px' }"
         :footer-style="{ textAlign: 'right' }" @close="onClose">
-        <a-form :model="form" :rules="rules" layout="vertical">
+        <a-form layout="vertical">
             <a-row :gutter="16">
                 <a-col :span="12">
-                    <a-form-item label="Name" name="name">
-                        <a-input v-model:value="form.name" placeholder="Please enter user name" />
+                    <a-form-item label="First name" v-bind="validateInfos.first_name">
+                        <a-input v-model:value="modelRef.first_name"
+                            @blur="validate('first_name', { trigger: 'blur' }).catch(() => { })" />
                     </a-form-item>
                 </a-col>
                 <a-col :span="12">
-                    <a-form-item label="Url" name="url">
-                        <a-input v-model:value="form.url" style="width: 100%" addon-before="http://" addon-after=".com"
-                            placeholder="please enter url" />
+                    <a-form-item label="Last name" v-bind="validateInfos.last_name">
+                        <a-input v-model:value="modelRef.last_name"
+                            @blur="validate('last_name', { trigger: 'blur' }).catch(() => { })" />
                     </a-form-item>
                 </a-col>
             </a-row>
             <a-row :gutter="16">
                 <a-col :span="12">
-                    <a-form-item label="Owner" name="owner">
-                        <a-select v-model:value="form.owner" placeholder="Please a-s an owner">
-                            <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>
-                            <a-select-option value="mao">Maomao Zhou</a-select-option>
+                    <a-form-item label="Role" v-bind="validateInfos.role">
+                        <a-select v-model:value="modelRef.role" placeholder="please select role">
+                            <a-select-option v-for="role in roles" :key="role._id" :value="role._id">
+                                {{ role.name }}
+                            </a-select-option>
                         </a-select>
                     </a-form-item>
                 </a-col>
-                <a-col :span="12">
-                    <a-form-item label="Type" name="type">
-                        <a-select v-model:value="form.type" placeholder="Please choose the type">
-                            <a-select-option value="private">Private</a-select-option>
-                            <a-select-option value="public">Public</a-select-option>
-                        </a-select>
+                <a-col :span=12>
+                    <a-form-item label="Phone" v-bind="validateInfos.phone">
+                        <a-input v-model:value="modelRef.phone" v-mask="'+998-##-###-##-##'"
+                            @blur="validate('Phone', { trigger: 'blur' }).catch(() => { })" />
                     </a-form-item>
                 </a-col>
             </a-row>
-            <a-row :gutter="16">
+            <a-row :gutter="16" class="my-3">
                 <a-col :span="12">
-                    <a-form-item label="Approver" name="approver">
-                        <a-select v-model:value="form.approver" placeholder="Please choose the approver">
-                            <a-select-option value="jack">Jack Ma</a-select-option>
-                            <a-select-option value="tom">Tom Liu</a-select-option>
-                        </a-select>
+                    <a-form-item label="Salary" v-bind="validateInfos.salary">
+                        <a-input-number id="inputNumber" v-model:value="modelRef.salary" :min="1000" :max="100000" />
                     </a-form-item>
+                </a-col>
+                <a-col :span="12">
+                    <input type="file" @change="handleFileChange" />
                 </a-col>
 
             </a-row>
-            <a-row :gutter="16">
-                <a-col :span="24">
-                    <a-form-item label="Description" name="description">
-                        <a-textarea v-model:value="form.description" :rows="4"
-                            placeholder="please enter url description" />
-                    </a-form-item>
-                </a-col>
-            </a-row>
+            <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+                <a-button class="bg-btn-default" type="primary" @click.prevent="onSubmit">Create</a-button>
+                <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+            </a-form-item>
         </a-form>
-        <template #extra>
-            <a-space>
-                <a-button @click="onClose">Cancel</a-button>
-                <a-button type="primary" @click="onClose">Submit</a-button>
-            </a-space>
-        </template>
     </a-drawer>
 </template>
 <script lang="ts" setup>
+import { useRolesStore } from '@/stores/roles/roles';
+import { useDirectorStore } from '@/stores/director/director';
+import { storeToRefs } from 'pinia';
+import { IDirectorReq } from '@/interfaces';
 import { reactive } from 'vue';
-import type { Rule } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 
-defineProps<{
+const { roles } = storeToRefs(useRolesStore())
+
+const props = defineProps<{
     isOpen: boolean,
     onClose: () => void
 }>()
 
-const form = reactive({
-    name: '',
-    url: '',
-    owner: '',
-    type: '',
-    approver: '',
-    description: '',
+const emit = defineEmits(['update:isOpen'])
+const useForm = Form.useForm;
+
+const modelRef: IDirectorReq = reactive({
+    first_name: '',
+    last_name: "",
+    phone: "+998-",
+    role: "",
+    salary: 1000
 });
 
-const rules: Record<string, Rule[]> = {
-    name: [{ required: true, message: 'Please enter user name' }],
-    url: [{ required: true, message: 'please enter url' }],
-    owner: [{ required: true, message: 'Please select an owner' }],
-    type: [{ required: true, message: 'Please choose the type' }],
-    approver: [{ required: true, message: 'Please choose the approver' }],
-    description: [{ required: true, message: 'Please enter url description' }],
+const handleFileChange = (e: any) => {
+    console.log("image:", e.target.files[0]);
+}
+
+const rulesRef = reactive({
+    first_name: [
+        {
+            required: true,
+            message: 'Please input first_name',
+        },
+        {
+            min: 4,
+            max: 10,
+            message: 'Length should be 3 to 10',
+            trigger: 'blur',
+        },
+    ],
+    last_name: [
+        {
+            required: true,
+            message: 'Please input last_name',
+        },
+        {
+            min: 4,
+            max: 10,
+            message: 'Length should be 4 to 10',
+            trigger: 'blur',
+        },
+    ],
+    phone: [
+        {
+            required: true,
+            message: 'Please enter phone number',
+        },
+    ],
+    role: [
+        {
+            required: true,
+            messag: "Please select role"
+        }
+    ],
+    salary: [
+        {
+            required: true,
+            message: "Please enter salary"
+        }
+    ]
+});
+
+const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+
+const createStaff = async () => {
+    await useDirectorStore().createStaff({
+        first_name: modelRef.first_name,
+        last_name: modelRef.last_name,
+        phone: modelRef.phone.split("-").join(""),
+        role: modelRef.role,
+        salary: modelRef.salary
+    });
+    props.onClose()
+    resetFields()
+}
+
+
+const onSubmit = () => {
+    validate()
+        .then(() => {
+            // console.log('msmsmsl', toRaw(modelRef));
+            // const formData = new FormData();
+            // formData.append("first_name", modelRef.first_name)
+            // formData.append("last_name", modelRef.last_name)
+            // formData.append("image", modelRef.image)
+            // formData.append("phone", modelRef.phone.split("-").join(""))
+            // formData.append("role", modelRef.role)
+            // console.log("a", formData);
+            createStaff()
+        })
+        .catch(err => {
+            console.log('error', err);
+        });
 };
 
 </script>

@@ -1,1 +1,9 @@
 @import url("./tailwind.css");
+@import url("./assets/font-family/style.css");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "sf500";
+}

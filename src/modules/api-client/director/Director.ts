@@ -1,5 +1,5 @@
 import { IDirectorApiClientUrls } from "@/interfaces";
-import { DirectorApiClient } from "./IDirectorApiClient";
+import { DirectorApiClient } from "./DirectorApiClient";
 
 const urls: IDirectorApiClientUrls = {
     createStaff: "/director/add-staff",

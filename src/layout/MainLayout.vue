@@ -10,4 +10,4 @@
 import Dashboard from "@/components/dashboard/index.vue"
 </script>
 
-<style scoped></style>y
+<style scoped></style>

@@ -1,50 +1,49 @@
-import { DashboardOutlined, SnippetsOutlined, SettingOutlined, GroupOutlined, TeamOutlined, FolderOpenOutlined, InsertRowRightOutlined } from "@ant-design/icons-vue"
 export const menu = [
     {
         title: "Dashboard",
         path: "/dashboard",
-        icon: DashboardOutlined,
+        icon: "material-symbols:team-dashboard-outline",
         key: 1,
         role: ["director"]
     },
     {
         title: "Stafss",
         path: "/staff",
-        icon: SnippetsOutlined,
+        icon: "medical-icon:i-care-staff-area",
         key: 2,
         role: ["director", "finance"]
     },
     {
         title: "Students",
         path: "/students",
-        icon: TeamOutlined,
+        icon: "material-symbols:team-dashboard-outline",
         key: 3,
         role: ["admin"]
     },
     {
         title: "Courses",
         path: "/courses",
-        icon: FolderOpenOutlined,
+        icon: "material-symbols:team-dashboard-outline",
         key: 4,
         role: ["admin"]
     },
     {
         title: "Rooms",
         path: "/rooms",
-        icon: InsertRowRightOutlined,
+        icon: "material-symbols:team-dashboard-outline",
         key: 5,
         role: ["admin"]
     }, {
         title: "Groups",
         path: "/groups",
-        icon: GroupOutlined,
+        icon: "material-symbols:team-dashboard-outline",
         key: 6,
         role: ["admin"]
     },
     {
         title: "Settings",
         path: "/settings",
-        icon: SettingOutlined,
+        icon: "ic:outline-settings",
         key: 7,
         role: ["admin", "director", "finance", "teacher", "student"]
     }

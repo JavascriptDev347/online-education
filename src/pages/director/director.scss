@@ -1,0 +1,13 @@
+// staff section start
+:deep(.ant-table-wrapper) {
+  background-color: #fff !important;
+}
+:deep(.ant-table-thead) {
+  background-color: red !important;
+}
+
+:deep(.ant-table-row) {
+  margin-top: 10px !important;
+}
+
+//staff section end

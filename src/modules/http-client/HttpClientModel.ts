@@ -73,7 +73,7 @@ export class HttpClientModel implements IHttpClient {
             const { url, params } = parameters;
             try {
                 http.delete(url, params).then((response: AxiosResponse) => {
-                    resolve(response.data as T)
+                    resolve(response as T)
                     console.log('delete')
                 }).catch((error: AxiosError) => {
                     console.log('reject')
