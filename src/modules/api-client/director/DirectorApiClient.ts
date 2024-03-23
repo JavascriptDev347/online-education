@@ -23,6 +23,15 @@ export class DirectorApiClient implements IDirectorApiClient {
         return HttpClient.post<IDirectorCreatePayload>(requestParams)
     }
 
+    activeStaff(payload: any): Promise<void> {
+        const requesParams: IHttpRequestParams = {
+            url: this.urls.activeStaff + "/" + payload.id,
+            payload
+        }
+
+        return HttpClient.post<void>(requesParams)
+    }
+
     deleteStaff(id: string): Promise<void> {
         const requestParams: IHttpRequestParams = {
             url: this.urls.deleteStaff + "/" + id

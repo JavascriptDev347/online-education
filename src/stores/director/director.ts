@@ -7,7 +7,8 @@ export const useDirectorStore = defineStore({
     id: "director",
     state: () => {
         return {
-            staffs: <any>[]
+            staffs: <any>[],
+            errorStatus: false
         }
     },
     actions: {
@@ -23,10 +24,15 @@ export const useDirectorStore = defineStore({
             try {
                 const { staff } = await apiClient.director.createStaff(payload)
                 await message.success(`Success ${staff.first_name}`)
-            } catch (error) {
-
+                this.errorStatus = false
+            } catch (error: any) {
+                this.errorStatus = true
             }
-
+        },
+        async activeStaff(payload: any) {
+            await apiClient.director.activeStaff(payload)
+            await this.getAllStaffs()
+            await message.success("Success")
         },
         async deleteStaff(id: string) {
             try {

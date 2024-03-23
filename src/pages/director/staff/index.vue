@@ -13,8 +13,8 @@
         </div>
 
         <create :isOpen="isOpen" :onClose="onClose" @update:is-open="onClose" />
-        <a-table :columns="columns" :data-source="loading ? [] : staffs['staffs']" :loading="loading"
-            :scroll="{ x: 800 }" :expand-column-width="80">
+        <a-table :columns="columns" :data-source="staffs['staffs']" :scroll="{ x: 800 }" :expand-column-width="80"
+            :loading="loading">
             <template #bodyCell="{ column, _, record }">
                 <template v-if="column.dataIndex === 'image'">
                     <div class="flex items-center gap-[10px]">
@@ -31,7 +31,7 @@
                     </div>
                 </template>
                 <template v-if="column.dataIndex === 'status'">
-                    <a-checkbox v-model:checked="record.status"></a-checkbox>
+                    <a-checkbox v-model:checked="record.status" @change="statusChange(record.id)"></a-checkbox>
                 </template>
                 <template v-if="column.dataIndex === 'start_date'">
                     <span>{{ moment(record.start_date).format('YYYY-MM-DD HH:mm:ss') }}</span>
@@ -93,6 +93,13 @@ onMounted(async () => {
 const deleteStaff = async (id: string) => {
     await directorStore.deleteStaff(id);
     message.success("O'chirildi")
+}
+
+
+const statusChange = async (id: any) => {
+    await directorStore.activeStaff({
+        id: id
+    })
 }
 
 const columns = [

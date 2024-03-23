@@ -6,7 +6,11 @@ const urls: IAdminApiClientUrls = {
     deleteStudent: "",
     createStudent: "",
     getStudent: "",
-    updateStudent: "/admin/add-student"
+    updateStudent: "/admin/add-student",
+    getAllTeachers: "/admin/get-teachers/{q}",
+    getAllCourses: "/courses/all/{q}",
+    getAllRooms: "/rooms/all/{q}",
+    getAllGroups: "/groups/all/{q}"
 }
 
 const adminApiClient = new AdminApiClient(urls)

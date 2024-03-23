@@ -24,4 +24,36 @@ export class AdminApiClient implements IAdminApiClient {
 
         return HttpClient.post<IAdminPayloadPost>(requestParams)
     }
+
+    getAllTeachers(): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getAllTeachers
+        }
+
+        return HttpClient.get<void>(requestParams)
+    }
+
+    getAllCourses(): Promise<void> {
+        const requesParams: IHttpRequestParams = {
+            url: this.urls.getAllCourses
+        }
+
+        return HttpClient.get<void>(requesParams)
+    }
+
+    getAllRooms(): Promise<void> {
+        const requesParams: IHttpRequestParams = {
+            url: this.urls.getAllRooms
+        }
+
+        return HttpClient.get<void>(requesParams)
+    }
+
+    getAllGroups(): Promise<void> {
+        const requesParams: IHttpRequestParams = {
+            url: this.urls.getAllGroups
+        }
+
+        return HttpClient.get<void>(requesParams)
+    }
 }

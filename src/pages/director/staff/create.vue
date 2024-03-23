@@ -40,9 +40,10 @@
                     </a-form-item>
                 </a-col>
                 <a-col :span="12">
-                    <input type="file" @change="handleFileChange" />
+                    <a-form-item label="Image Url" v-bind="validateInfos.image">
+                        <a-input v-model:value="modelRef.image" />
+                    </a-form-item>
                 </a-col>
-
             </a-row>
             <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
                 <a-button class="bg-btn-default" type="primary" @click.prevent="onSubmit">Create</a-button>
@@ -59,7 +60,7 @@ import { IDirectorReq } from '@/interfaces';
 import { reactive } from 'vue';
 import { Form } from 'ant-design-vue';
 
-const { roles } = storeToRefs(useRolesStore())
+const { roles } = storeToRefs(useRolesStore());
 
 const props = defineProps<{
     isOpen: boolean,
@@ -74,12 +75,9 @@ const modelRef: IDirectorReq = reactive({
     last_name: "",
     phone: "+998-",
     role: "",
-    salary: 1000
+    salary: 1000,
+    image: ""
 });
-
-const handleFileChange = (e: any) => {
-    console.log("image:", e.target.files[0]);
-}
 
 const rulesRef = reactive({
     first_name: [
@@ -89,8 +87,8 @@ const rulesRef = reactive({
         },
         {
             min: 4,
-            max: 10,
-            message: 'Length should be 3 to 10',
+            max: 20,
+            message: 'Length should be 4 to 20',
             trigger: 'blur',
         },
     ],
@@ -101,8 +99,8 @@ const rulesRef = reactive({
         },
         {
             min: 4,
-            max: 10,
-            message: 'Length should be 4 to 10',
+            max: 20,
+            message: 'Length should be 4 to 20',
             trigger: 'blur',
         },
     ],
@@ -123,6 +121,12 @@ const rulesRef = reactive({
             required: true,
             message: "Please enter salary"
         }
+    ],
+    image: [
+        {
+            required: true,
+            message: "Please enter image url"
+        }
     ]
 });
 
@@ -134,25 +138,17 @@ const createStaff = async () => {
         last_name: modelRef.last_name,
         phone: modelRef.phone.split("-").join(""),
         role: modelRef.role,
+        image: modelRef.image,
         salary: modelRef.salary
-    });
+    })
     props.onClose()
     resetFields()
 }
 
-
 const onSubmit = () => {
     validate()
         .then(() => {
-            // console.log('msmsmsl', toRaw(modelRef));
-            // const formData = new FormData();
-            // formData.append("first_name", modelRef.first_name)
-            // formData.append("last_name", modelRef.last_name)
-            // formData.append("image", modelRef.image)
-            // formData.append("phone", modelRef.phone.split("-").join(""))
-            // formData.append("role", modelRef.role)
-            // console.log("a", formData);
-            createStaff()
+            createStaff();
         })
         .catch(err => {
             console.log('error', err);

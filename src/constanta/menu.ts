@@ -14,6 +14,19 @@ export const menu = [
         role: ["director", "finance"]
     },
     {
+        title: "Roles",
+        path: "/roles",
+        icon: "eos-icons:role-binding-outlined",
+        key: 0,
+        role: ["director"]
+    },
+    {
+        title: "Teachers",
+        path: "/teachers",
+        icon: "fluent-emoji-high-contrast:teacher",
+        role: ['admin']
+    },
+    {
         title: "Students",
         path: "/students",
         icon: "material-symbols:team-dashboard-outline",
@@ -23,26 +36,26 @@ export const menu = [
     {
         title: "Courses",
         path: "/courses",
-        icon: "material-symbols:team-dashboard-outline",
+        icon: "tdesign:course",
         key: 4,
         role: ["admin"]
     },
     {
         title: "Rooms",
         path: "/rooms",
-        icon: "material-symbols:team-dashboard-outline",
+        icon: "cbi:roomsother",
         key: 5,
         role: ["admin"]
     }, {
         title: "Groups",
         path: "/groups",
-        icon: "material-symbols:team-dashboard-outline",
+        icon: "healthicons:i-groups-perspective-crowd-outline",
         key: 6,
         role: ["admin"]
     },
     {
-        title: "Settings",
-        path: "/settings",
+        title: "Profile",
+        path: "/profile",
         icon: "ic:outline-settings",
         key: 7,
         role: ["admin", "director", "finance", "teacher", "student"]

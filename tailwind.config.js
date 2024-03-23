@@ -18,10 +18,12 @@ export default {
           menu: '#235EE8',
           default: '#878EA1',
           active: '#235EE8',
-          name: '#394355'
+          name: '#394355',
+          p: '#394456',
+          image:'#262B2E'
         },
         btn: {
-          default:'#235EE8'
+          default: '#235EE8'
         }
       }
     },

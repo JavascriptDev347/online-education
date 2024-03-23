@@ -1,7 +1,10 @@
 <template>
     <div>
-        <a-table :columns="columns" :data-source="courses['courses']" :scroll="{ x: 800 }" :expand-column-width="80">
-            <template #bodyCell="{ column }">
+        <a-table :columns="columns" :data-source="rooms['rooms']" :scroll="{ x: 800 }" :expand-column-width="80">
+            <template #bodyCell="{ column, text }">
+                <template v-if="column.dataIndex === 'name'">
+                    <a>{{ text }}</a>
+                </template>
                 <template v-if="column.dataIndex === 'action'">
                     <a-popconfirm title="Sure to delete?">
                         <a>Delete</a>
@@ -17,19 +20,16 @@ import { useAdminStore } from '@/stores/admin/admin';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 
-const { courses } = storeToRefs(useAdminStore())
-
+const { rooms } = storeToRefs(useAdminStore());
 onMounted(async () => {
-    await useAdminStore().getAllCourses()
-});
+    await useAdminStore().getAllRooms()
+})
 
 const columns = [
     { title: "Name", dataIndex: "name" },
-    { title: "Price", dataIndex: "price" },
-    { title: "Period", dataIndex: "period" },
+    { title: "Size", dataIndex: "size" },
     { title: "Action", dataIndex: "action" },
 ];
-
 </script>
 
 <style scoped lang="scss">

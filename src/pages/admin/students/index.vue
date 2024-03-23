@@ -1,14 +1,27 @@
 <template>
-    <a-button type="primary" @click="showDrawer">
-        <template #icon>
-            <PlusOutlined />
-        </template>
-        New account
-    </a-button>
-    <a-table :columns="columns" :data-source="lists['students']" bordered>
-        <template #bodyCell="{ column, text }">
+    <div class="flex flex-col gap-[10px]">
+        <div class="flex justify-between items-center mb-3">
+            <a-button size="large" @click="showDrawer"
+                class="flex items-center justify-center bg-btn-default text-white hover:text-white">
+                <PlusOutlined />
+                Add New Student
+            </a-button>
+
+            <div class="w-[200px] bg-bg-1 ">
+                <a-input-search v-model:value="search" placeholder="input search text" size="large"
+                    @search="onSearch" />
+            </div>
+        </div>
+    </div>
+    <a-table :columns="columns" :data-source="lists['students']" :scroll="{ x: 800 }" :expand-column-width="80">
+        <template #bodyCell="{ column, text, record }">
             <template v-if="column.dataIndex === 'name'">
                 <a>{{ text }}</a>
+            </template>
+
+            <template v-if="column.dataIndex === 'start_date'">
+                <span>{{ moment(record.start_date).format('YYYY-MM-DD HH:mm:ss') }}</span>
+                <p>{{ moment(record.start_date, 'YYYYMMDD HH:mm:ss').fromNow() }}</p>
             </template>
 
             <template v-if="column.dataIndex === 'action'">
@@ -25,7 +38,6 @@
             </h2>
         </template>
 
-        <template #footer>Footer</template>
     </a-table>
     <createStudent :isOpen="createOpen" :onClose="closeDrawerHandler" />
 </template>
@@ -36,10 +48,16 @@ import { storeToRefs } from "pinia";
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from "vue";
 import createStudent from "./createStudent.vue";
+import moment from "moment";
 
 const adminStore = useAdminStore();
 
-const { lists } = storeToRefs(adminStore)
+const { lists } = storeToRefs(adminStore);
+const search = ref("")
+
+const onSearch = () => {
+    console.log("s v", search.value);
+}
 
 onMounted(async () => {
     await adminStore.getAllStudents()
@@ -59,14 +77,78 @@ const columns = [
     { title: "First name", dataIndex: "first_name" },
     { title: "Last name", dataIndex: "last_name" },
     { title: "Phone number", dataIndex: "phone" },
+    { title: "Start date", dataIndex: "start_date" },
     { title: "Action", dataIndex: "action" },
 ];
 
 </script>
 
-<style scoped>
-th.column-money,
-td.column-money {
-    text-align: right !important;
+<style scoped lang="scss">
+:deep(table) {
+    background-color: #f6f7fb;
+}
+
+:deep(.ant-table-thead) {
+    background-color: #f6f7fb !important;
+
+    tr {
+        background-color: #f6f7fb !important;
+
+        &:first-child th:first-child {
+            border-top-left-radius: 10px;
+            border-left: 1px solid #e1eaed;
+        }
+
+        &:first-child th:last-child {
+            border-top-right-radius: 10px;
+            border-right: 1px solid #e1eaed;
+        }
+
+        th {
+            background-color: #f6f7fb !important;
+        }
+    }
+}
+
+:deep(.ant-table-tbody) {
+    .ant-table-measure-row {
+        display: none !important;
+    }
+
+    tr {
+        background: #fff;
+        height: 84px !important;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 6px;
+            left: 0;
+            bottom: 0;
+            background-color: #f6f7fb;
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+        }
+
+        &:hover {
+            td:first-child {
+                border-top-left-radius: 10px !important;
+            }
+
+            td:last-child {
+                border-top-right-radius: 10px !important;
+            }
+        }
+
+        td:first-child {
+            border-top-left-radius: 10px !important;
+        }
+
+        td:last-child {
+            border-top-right-radius: 10px !important;
+        }
+    }
 }
 </style>

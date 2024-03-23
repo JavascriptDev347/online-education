@@ -1,6 +1,7 @@
 import MainLayout from "@/layout/MainLayout.vue";
 import Director from "@/pages/director/index.vue";
 import Staff from "@/pages/director/staff/index.vue";
+import Roles from "@/pages/director/roles/index.vue"
 
 export default {
     path: "/",
@@ -17,6 +18,11 @@ export default {
             path: "/staff",
             name: "Staff",
             component: Staff
+        },
+        {
+            path: "/roles",
+            name: "Roles",
+            component: Roles
         }
     ]
 }
