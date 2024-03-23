@@ -85,7 +85,6 @@ import { IAuthRequest } from '@/interfaces';
 import { message } from 'ant-design-vue';
 const authStore = useAuthStore();
 
-const i = LockOutlined;
 
 const formState = reactive<IAuthRequest>({
     phone: '+998-',

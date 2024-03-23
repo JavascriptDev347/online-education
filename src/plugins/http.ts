@@ -1,6 +1,7 @@
 import axios from "axios"
 const http = axios.create({
-    baseURL: import.meta.env.VITE_APP_BASE_URL,
+    // baseURL: import.meta.env.VITE_APP_BASE_URL,
+    baseURL: "https://system-backend-production.up.railway.app/api",
     headers: {
         "Content-Type": "application/json"
     }

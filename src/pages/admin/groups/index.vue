@@ -2,6 +2,7 @@
     <div>
         <a-table :columns="columns" :data-source="groups['groups']" :scroll="{ x: 800 }" :expand-column-width="80">
             <template #bodyCell="{ column, _, record }">
+                {{_}}
                 <template v-if="column.dataIndex === 'action'">
                     <a-popconfirm title="Sure to delete?">
                         <a>Delete</a>

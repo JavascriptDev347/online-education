@@ -16,6 +16,7 @@
         <a-table :columns="columns" :data-source="staffs['staffs']" :scroll="{ x: 800 }" :expand-column-width="80"
             :loading="loading">
             <template #bodyCell="{ column, _, record }">
+                {{ _ }}
                 <template v-if="column.dataIndex === 'image'">
                     <div class="flex items-center gap-[10px]">
                         <a-avatar :size="60">
