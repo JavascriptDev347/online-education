@@ -1,0 +1,21 @@
+{
+  "new": {
+    "student": "Add new student"
+  },
+  "length": {
+    "student": "Number of students",
+    "teacher": "Number of teachers"
+  },
+  "table": {
+    "student": {
+      "first_name": "First name",
+      "last_name": "Last name",
+      "phone": "Phone number",
+      "start_date": "Start date",
+      "action": "Action"
+    }
+  },
+  "search": {
+    "input": "Enter the word you want to search for"
+  }
+}

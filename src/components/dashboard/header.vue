@@ -1,15 +1,36 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useSidebar } from "@/service/useSidebar"
+import i18n from "@/plugins/i18n";
+import { useI18n } from 'vue-i18n';
+import { watch } from 'vue';
+import { Icon } from '@iconify/vue';
 
 const { isOpen } = useSidebar()
 const notificationOpen = ref(false);
+const { locale } = useI18n();
 
 const dropdownOpen = ref(false);
 
 const logout = () => {
     localStorage.clear();
 }
+
+const lang: any = ref(localStorage.getItem('lang') || 'Uzbekcha');
+const languages = [
+    { value: 'uz', label: 'Uzbekcha', icon: 'emojione:flag-for-uzbekistan' },
+    { value: 'eng', label: "English", icon: 'emojione:flag-for-united-states' },
+    { value: 'ru', label: "Russkiy", icon: "emojione:flag-for-russia" }
+];
+
+const selectLanguages = () => {
+    i18n.global.locale = lang.value
+    localStorage.setItem('lang', lang.value)
+}
+
+watch(locale, (newlocale) => {
+    localStorage.setItem("lang", newlocale);
+});
 
 </script>
 <template>
@@ -20,7 +41,6 @@ const logout = () => {
       py-2
       border-b border-br-1 
 ">
-
         <div class="flex items-center">
             <button @click="isOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,6 +51,15 @@ const logout = () => {
         </div>
 
         <div class="flex items-center">
+            <a-select style="width: 130px" v-model:value="locale" @change="selectLanguages">
+                <a-select-option v-for="language in languages" :value="language.value">
+                    <div class="flex items-center align-center gap-[2px]">
+                        <Icon :icon="language.icon" width="20px " height="20px" />
+                        <span>{{ language.label }}</span>
+                    </div>
+                </a-select-option>
+            </a-select>
+
             <!--      notification-->
             <div class="flex items-center">
                 <div class="relative">

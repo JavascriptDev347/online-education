@@ -27,7 +27,7 @@
 
             <template #title>
                 <h2 class="text-bold flex items-center justify-center text-xl ">
-                    Bizdagi teacherlar soni : {{ teachers["count"] }}
+                    {{ t('length.teacher') }} : {{ teachers["count"] }}
                 </h2>
             </template>
 
@@ -37,9 +37,12 @@
 
 <script setup lang="ts">
 import { useAdminStore } from '@/stores/admin/admin';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import moment from 'moment';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
 
 const { teachers } = storeToRefs(useAdminStore());
 onMounted(async () => {
@@ -53,13 +56,13 @@ const onSearch = () => {
 
 }
 
-const columns = [
-    { title: "First name", dataIndex: "first_name" },
-    { title: "Last name", dataIndex: "last_name" },
-    { title: "Phone number", dataIndex: "phone" },
-    { title: "Start date", dataIndex: "start_date" },
-    { title: "Action", dataIndex: "action" },
-];
+const columns = computed(() => [
+    { title: t('table.student.first_name'), dataIndex: "first_name" },
+    { title: t('table.student.last_name'), dataIndex: "last_name" },
+    { title: t('table.student.phone'), dataIndex: "phone" },
+    { title: t('table.student.start_date'), dataIndex: "start_date" },
+    { title: t('table.student.action'), dataIndex: "action" },
+]);
 
 </script>
 

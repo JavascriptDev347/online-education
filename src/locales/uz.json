@@ -1,0 +1,21 @@
+{
+  "new": {
+    "student": "Yangi o'quvchi qo'shish"
+  },
+  "length": {
+    "student": "O'quvchilar soni",
+    "teacher": "Teacherlar soni"
+  },
+  "table": {
+    "student": {
+      "first_name": "Ismi",
+      "last_name": "Familiyasi",
+      "phone": "Telefon numeri",
+      "start_date": "Boshlangan vaqti",
+      "action": "Boshqarish"
+    }
+  },
+  "search": {
+    "input": "Qidirmoqchi bo'lgan so'zni kiriting"
+  }
+}
