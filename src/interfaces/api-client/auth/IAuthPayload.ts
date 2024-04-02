@@ -4,14 +4,14 @@ export interface IAuthPayload {
 }
 
 export interface IUser {
-    _id: string,
+    _id?: string,
     first_name: string,
     last_name: string,
     phone: string,
     role: string,
     status: boolean,
     image: null | any,
-   
+    start_date: string
 }
 
 interface IToken {

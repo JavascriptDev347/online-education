@@ -23,7 +23,6 @@ export class HttpClientModel implements IHttpClient {
         })
     }
 
-
     post<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise((resolve, reject) => {
             const { url, payload } = parameters;
@@ -42,8 +41,6 @@ export class HttpClientModel implements IHttpClient {
             }
         });
     }
-
-
 
     put<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise<T>((resolve, reject) => {

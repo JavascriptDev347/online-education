@@ -1,8 +1,8 @@
 <template>
-    <a-drawer title="Create a new account" :width="540" :open="isOpen" :body-style="{ paddingBottom: '80px' }"
-        :footer-style="{ textAlign: 'right' }" @close="onClose">
+    <a-drawer title="Create a new account" class="my-drawer" :width="size ? '45%' : '100%'" :open="isOpen"
+        :body-style="{ paddingBottom: '80px' }" :footer-style="{ textAlign: 'right' }" @close="onClose">
         <a-form layout="vertical">
-            <a-row :gutter="16">
+            <a-row :gutter="16" class="row">
                 <a-col :span="12">
                     <a-form-item label="First name" v-bind="validateInfos.first_name">
                         <a-input v-model:value="modelRef.first_name"
@@ -16,11 +16,11 @@
                     </a-form-item>
                 </a-col>
             </a-row>
-            <a-row :gutter="16">
+            <a-row :gutter="16" class="row">
                 <a-col :span="12">
                     <a-form-item label="Role" v-bind="validateInfos.role">
                         <a-select v-model:value="modelRef.role" placeholder="please select role">
-                            <a-select-option v-for="role in roles" :key="role._id" :value="role._id">
+                            <a-select-option v-for=" role  in  roles " :key="role._id" :value="role._id">
                                 {{ role.name }}
                             </a-select-option>
                         </a-select>
@@ -33,7 +33,7 @@
                     </a-form-item>
                 </a-col>
             </a-row>
-            <a-row :gutter="16" class="my-3">
+            <a-row :gutter="16" class="my-3 row">
                 <a-col :span="12">
                     <a-form-item label="Salary" v-bind="validateInfos.salary">
                         <a-input-number id="inputNumber" v-model:value="modelRef.salary" :min="1000" :max="100000" />
@@ -57,10 +57,11 @@ import { useRolesStore } from '@/stores/roles/roles';
 import { useDirectorStore } from '@/stores/director/director';
 import { storeToRefs } from 'pinia';
 import { IDirectorReq } from '@/interfaces';
-import { reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { Form } from 'ant-design-vue';
 
 const { roles } = storeToRefs(useRolesStore());
+
 
 const props = defineProps<{
     isOpen: boolean,
@@ -78,6 +79,24 @@ const modelRef: IDirectorReq = reactive({
     salary: 1000,
     image: ""
 });
+
+const screenWidth = ref(window.innerWidth);
+const size = ref(false)
+
+const updateScreenWidth = () => {
+    screenWidth.value = window.innerWidth;
+    if (screenWidth.value > 786) {
+        size.value = true
+    } else {
+        size.value = false
+    }
+};
+
+
+onMounted(() => {
+    window.addEventListener('resize', updateScreenWidth);
+});
+
 
 const rulesRef = reactive({
     first_name: [
@@ -156,3 +175,17 @@ const onSubmit = () => {
 };
 
 </script>
+
+<style lang="scss" scoped>
+@media(max-width:575px) {
+    .row {
+        flex-direction: column;
+
+        .ant-col {
+            max-width: 100% !important;
+        }
+    }
+
+
+}
+</style>

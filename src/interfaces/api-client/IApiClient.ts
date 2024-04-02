@@ -1,6 +1,7 @@
 import { IAdminApiClient } from "./admin";
 import { IAuthApiClient } from "./auth";
 import { IDirectorApiClient } from "./director";
+import { IProfileApiClient } from "./profile";
 import { IRolesApiClient } from "./roles";
 import { ISApiClient } from "./student";
 
@@ -9,5 +10,6 @@ export interface IApiClient {
     student: ISApiClient,
     admin: IAdminApiClient,
     director: IDirectorApiClient,
-    roles: IRolesApiClient
+    roles: IRolesApiClient,
+    profile: IProfileApiClient
 }

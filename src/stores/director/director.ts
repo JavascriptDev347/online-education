@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { apiClient } from "@/modules";
-import { IDirectorReq } from '@/interfaces';
-import { message } from "ant-design-vue";
+import {defineStore} from "pinia";
+import {apiClient} from "@/modules";
+import {IDirectorReq} from '@/interfaces';
+import {message} from "ant-design-vue";
 
 export const useDirectorStore = defineStore({
     id: "director",
@@ -14,8 +14,7 @@ export const useDirectorStore = defineStore({
     actions: {
         async getAllStaffs() {
             try {
-                const res = await apiClient.director.getAllStaffs()
-                this.staffs = res
+                this.staffs = await apiClient.director.getAllStaffs()
             } catch (error) {
                 console.log("er", error);
             }
