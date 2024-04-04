@@ -30,14 +30,14 @@
     </a-form>
     <template #extra>
       <a-space>
-        <a-button @click="handleSubmit">Submit</a-button>
+        <a-button v-if="editOrCreate" @click="handleSubmit">Edit</a-button>
+        <a-button v-else @click="handleSubmit">Submit</a-button>
       </a-space>
     </template>
   </a-drawer>
 </template>
 <script lang="ts" setup>
-import {reactive} from 'vue';
-import type {Rule} from 'ant-design-vue/es/form';
+import {reactive, ref} from 'vue';
 import {IAdminRequestPost} from "@/interfaces";
 import {useForm} from "ant-design-vue/es/form";
 import {storeToRefs} from "pinia";
@@ -47,9 +47,10 @@ import {useAdminStore} from "@/stores/admin/admin";
 const {roles} = storeToRefs(useRolesStore());
 const props = defineProps<{
   isOpen: boolean,
-  onClose: () => void
+  onClose: () => void,
 }>();
 
+const editOrCreate = ref(false);
 
 const form: IAdminRequestPost = reactive({
   first_name: "",

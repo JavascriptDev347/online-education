@@ -10,5 +10,5 @@ export interface IAdminApiClient {
     getAllRooms: () => Promise<void>
     getAllGroups: () => Promise<void>
     deleteStudent: (id: string) => Promise<void>
-    editStudent: (payload: IAdminRequestPost) => Promise<void>
+    editStudent: (id: string, payload: IAdminRequestPost) => Promise<void>
 }

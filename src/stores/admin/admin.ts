@@ -42,6 +42,8 @@ export const useAdminStore = defineStore({
         //edit
         async editStudent(id: string, payload: IAdminRequestPost) {
             await apiClient.admin.editStudent(id, payload)
+            await message.success("Muvaffaqiyatli o'zgartirildi")
+            await this.getAllStudents()
         },
 
         //delete

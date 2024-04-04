@@ -80,9 +80,9 @@ export class AdminApiClient implements IAdminApiClient {
         return HttpClient.delete<void>(requestParams)
     }
 
-    editStudent(payload: IAdminRequestPost): Promise<void> {
+    editStudent(id: string, payload: IAdminRequestPost): Promise<void> {
         const requestParams: IHttpRequestParams = {
-            url: this.urls.editStudent + "/" + payload._id,
+            url: this.urls.editStudent + "/" + id,
             payload
         }
 

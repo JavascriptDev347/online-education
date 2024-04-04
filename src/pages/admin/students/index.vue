@@ -26,7 +26,7 @@
 
       <template v-if="column.dataIndex === 'action'">
         <div class="flex gap-[5px]">
-          <a-button class="flex items-center justify-center" @click="editStudent(record)">
+          <a-button class="flex items-center justify-center" @click="showModal(record)">
             <EditOutlined/>
           </a-button>
           <a-button class="flex items-center justify-center" danger @click="deleteStudent(record.id)">
@@ -34,7 +34,6 @@
           </a-button>
         </div>
       </template>
-
     </template>
 
     <template #title>
@@ -45,23 +44,123 @@
 
   </a-table>
   <createStudent :isOpen="createOpen" :onClose="closeDrawerHandler"/>
+
+  <a-modal v-model:open="open" title="Edit Student" :footer="null">
+    {{ form }}
+    <a-form :model="form" layout="vertical">
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <a-form-item label="First name" name="first_name" v-bind="validateInfos.first_name">
+            <a-input v-model:value="form.first_name" placeholder="Please enter user name"
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="Last name" name="last_name" v-bind="validateInfos.last_name">
+            <a-input v-model:value="form.last_name" placeholder="Please enter user name"
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="Phone" v-bind="validateInfos.phone">
+            <a-input v-model:value="form.phone" v-mask="'+998-##-###-##-##'"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-button @click="handleEdit">Submit</a-button>
+    </a-form>
+  </a-modal>
 </template>
 
 <script lang="ts" setup>
 import {useAdminStore} from "@/stores/admin/admin"
 import {storeToRefs} from "pinia";
 import {PlusOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons-vue';
-import {onMounted, ref, computed} from 'vue';
+import {onMounted, ref, computed, reactive} from 'vue';
 import createStudent from "./createStudent.vue";
 import moment from "moment";
 import {useI18n} from 'vue-i18n'
+import {useForm} from "ant-design-vue/es/form";
 
-const {t} = useI18n()
+const {t} = useI18n();
+const open = ref<boolean>(false);
+let form = reactive({
+  phone: "",
+  first_name: "",
+  last_name: "",
+});
+
+const showModal = (record) => {
+  open.value = true;
+  if (record) {
+    Object.assign(form, record)
+  }
+
+};
+
+const handleEdit = () => {
+  adminStore.editStudent(form?.id, {
+    last_name: form.last_name,
+    first_name: form.first_name,
+    phone: form.phone.split("-").join("")
+  })
+  open.value = false;
+};
+
+const rulesRef = reactive({
+  first_name: [
+    {
+      required: true,
+      message: 'Please input first_name',
+    },
+    {
+      min: 4,
+      max: 20,
+      message: 'Length should be 4 to 20',
+      trigger: 'blur',
+    },
+  ],
+  last_name: [
+    {
+      required: true,
+      message: 'Please input last_name',
+    },
+    {
+      min: 4,
+      max: 20,
+      message: 'Length should be 4 to 20',
+      trigger: 'blur',
+    },
+  ],
+  phone: [
+    {
+      required: true,
+      message: 'Please enter phone number',
+    },
+  ],
+  salary: [
+    {
+      required: true,
+      message: "Please enter salary"
+    }
+  ],
+  course: [
+    {
+      required: true,
+      message: "Please enter course"
+    }
+  ]
+});
+
+const {validateInfos} = useForm(form, rulesRef);
+
+//
 
 const adminStore = useAdminStore();
 
 const {lists} = storeToRefs(adminStore);
-const search = ref("")
+const search = ref("");
 
 const onSearch = () => {
   console.log("s v", search.value);
@@ -93,9 +192,6 @@ const deleteStudent = (id: string) => {
   adminStore.deleteStudent(id)
 }
 
-const editStudent = (record) => {
-  console.log("e", record._id)
-}
 </script>
 
 <style scoped lang="scss">

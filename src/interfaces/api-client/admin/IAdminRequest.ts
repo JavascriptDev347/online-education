@@ -4,5 +4,5 @@ export interface IAdminRequestPost {
     phone: string,
     image?: string,
     course?: string,
-    salary: number
+    salary?: number
 }
