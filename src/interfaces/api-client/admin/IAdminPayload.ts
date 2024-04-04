@@ -28,3 +28,19 @@ export interface IStudent {
     start_date: Date,
     id: string
 }
+
+//course
+export interface ICoursePayload {
+    course: ICreateCourse
+}
+
+export interface ICreateCourse {
+    name: string,
+    price: number,
+    period: number,
+    _id?: string
+}
+
+export interface IDeletePayload {
+    message: string
+}

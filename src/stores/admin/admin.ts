@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {apiClient} from "@/modules";
-import {IAdminPayloadGet, IAdminRequestPost} from '@/interfaces';
+import {IAdminPayloadGet, IAdminRequestPost, ICreateCourse} from '@/interfaces';
 import {message} from 'ant-design-vue';
 
 export const useAdminStore = defineStore({
@@ -38,6 +38,11 @@ export const useAdminStore = defineStore({
             await message.success(res.message)
             await this.getAllStudents()
         },
+        async createCourse(payload: ICreateCourse) {
+            await apiClient.admin.createCourse(payload)
+            await message.success("Yangi kurs qo'shildi")
+            await this.getAllCourses()
+        },
 
         //edit
         async editStudent(id: string, payload: IAdminRequestPost) {
@@ -45,12 +50,23 @@ export const useAdminStore = defineStore({
             await message.success("Muvaffaqiyatli o'zgartirildi")
             await this.getAllStudents()
         },
+        async editCourse(payload: ICreateCourse) {
+            await apiClient.admin.editCourse(payload);
+            await message.success("Muvaffaqiyatli o'zgartirildi")
+            await this.getAllCourses()
+        },
 
         //delete
-        async deleteStudent(id) {
+        async deleteStudent(id: string) {
             await apiClient.admin.deleteStudent(id)
             await message.success("Ma'lumot o'chirildi")
             await this.getAllStudents()
+        },
+        async deleteCourse(id: string) {
+            const res = await apiClient.admin.deleteCourse(id);
+            message.success(res.message);
+            await this.getAllCourses();
+
         }
     },
     getters: {}

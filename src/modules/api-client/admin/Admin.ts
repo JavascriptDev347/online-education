@@ -1,17 +1,24 @@
-import { IAdminApiClientUrls } from "@/interfaces";
-import { AdminApiClient } from "./AdminApiClient";
+import {IAdminApiClientUrls} from "@/interfaces";
+import {AdminApiClient} from "./AdminApiClient";
 
 const urls: IAdminApiClientUrls = {
     getAllStudents: "/admin/get-students/{q}",
-    deleteStudent: "/admin/delete-student",
+    getStudentById: "/admin/get-student",
     createStudent: "/admin/add-student",
-    updateStudent: "/admin/add-student",
+    editStudent: "/admin/update-student",
+    deleteStudent: "/admin/delete-student",
+
     getAllTeachers: "/admin/get-teachers/{q}",
+
     getAllCourses: "/courses/all/{q}",
+    createCourse: "/courses/create-course",
+    editCourse: "/courses/update",
+    deleteCourse: "/courses/delete",
+
     getAllRooms: "/rooms/all/{q}",
+
     getAllGroups: "/groups/all/{q}",
-    editStudent:"/admin/update-student",
-    getStudentById:"/"
+
 }
 
 const adminApiClient = new AdminApiClient(urls)

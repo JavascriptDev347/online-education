@@ -3,7 +3,7 @@ import {
     IAdminApiClientUrls,
     IAdminPayloadGet,
     IAdminPayloadPost,
-    IAdminRequestPost,
+    IAdminRequestPost, ICoursePayload, ICreateCourse, IDeletePayload,
     IHttpRequestParams, IStudent
 } from "@/interfaces";
 import {HttpClient} from "@/modules/http-client";
@@ -25,7 +25,7 @@ export class AdminApiClient implements IAdminApiClient {
 
     getStudentById(id: string): Promise<IStudent> {
         const requestParams: IHttpRequestParams = {
-            url: this.urls.getStudentById
+            url: this.urls.getStudentById + "/" + id
         }
 
         return HttpClient.get(requestParams)
@@ -38,38 +38,6 @@ export class AdminApiClient implements IAdminApiClient {
         }
 
         return HttpClient.post<IAdminPayloadPost>(requestParams)
-    }
-
-    getAllTeachers(): Promise<void> {
-        const requestParams: IHttpRequestParams = {
-            url: this.urls.getAllTeachers
-        }
-
-        return HttpClient.get<void>(requestParams)
-    }
-
-    getAllCourses(): Promise<void> {
-        const requestParams: IHttpRequestParams = {
-            url: this.urls.getAllCourses
-        }
-
-        return HttpClient.get<void>(requestParams)
-    }
-
-    getAllRooms(): Promise<void> {
-        const requestParams: IHttpRequestParams = {
-            url: this.urls.getAllRooms
-        }
-
-        return HttpClient.get<void>(requestParams)
-    }
-
-    getAllGroups(): Promise<void> {
-        const requestParams: IHttpRequestParams = {
-            url: this.urls.getAllGroups
-        }
-
-        return HttpClient.get<void>(requestParams)
     }
 
     deleteStudent(id: string): Promise<void> {
@@ -88,4 +56,64 @@ export class AdminApiClient implements IAdminApiClient {
 
         return HttpClient.put<void>(requestParams)
     }
+
+    getAllTeachers(): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getAllTeachers
+        }
+
+        return HttpClient.get<void>(requestParams)
+    }
+
+    getAllCourses(): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getAllCourses
+        }
+
+        return HttpClient.get<void>(requestParams)
+    }
+
+    createCourse(payload: ICreateCourse): Promise<ICoursePayload> {
+
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.createCourse,
+            payload
+        }
+
+        return HttpClient.post<ICoursePayload>(requestParams)
+    }
+
+    editCourse(payload: ICreateCourse): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.editCourse + "/" + payload._id,
+            payload
+        }
+
+        return HttpClient.put<void>(requestParams)
+    }
+
+    deleteCourse(id: string): Promise<IDeletePayload> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.deleteCourse + "/" + id
+        }
+        return HttpClient.delete<IDeletePayload>(requestParams)
+    }
+
+    getAllRooms(): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getAllRooms
+        }
+
+        return HttpClient.get<void>(requestParams)
+    }
+
+    getAllGroups(): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getAllGroups
+        }
+
+        return HttpClient.get<void>(requestParams)
+    }
+
+
 }

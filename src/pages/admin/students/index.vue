@@ -46,7 +46,6 @@
   <createStudent :isOpen="createOpen" :onClose="closeDrawerHandler"/>
 
   <a-modal v-model:open="open" title="Edit Student" :footer="null">
-    {{ form }}
     <a-form :model="form" layout="vertical">
       <a-row :gutter="16">
         <a-col :span="12">
