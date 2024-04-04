@@ -1,6 +1,7 @@
-import { defineStore } from "pinia";
-import { apiClient } from "@/modules";
-import { IAdminPayloadGet } from '../../interfaces/api-client/admin/IAdminPayload';
+import {defineStore} from "pinia";
+import {apiClient} from "@/modules";
+import {IAdminPayloadGet, IAdminRequestPost} from '@/interfaces';
+import {message} from 'ant-design-vue';
 
 export const useAdminStore = defineStore({
     id: "admin",
@@ -16,40 +17,39 @@ export const useAdminStore = defineStore({
     actions: {
         //get
         async getAllStudents() {
-            try {
-                const res = await apiClient.admin.getAllStudents();
-                this.lists = res
-            } catch (error) {
-                console.log("er", error);
-            }
+            this.lists = await apiClient.admin.getAllStudents()
         },
         async getAllTeachers() {
-            try {
-                const res = await apiClient.admin.getAllTeachers();
-                this.teachers = res
-            } catch (error) {
-                console.log("er", error);
-            }
+            this.teachers = await apiClient.admin.getAllTeachers()
         },
         async getAllCourses() {
-            try {
-                const res = await apiClient.admin.getAllCourses()
-                this.courses = res
-            } catch (error) {
-                console.log("er", error);
-
-            }
+            this.courses = await apiClient.admin.getAllCourses()
         },
         async getAllRooms() {
-            const res = await apiClient.admin.getAllRooms();
-            this.rooms = res
+            this.rooms = await apiClient.admin.getAllRooms()
         },
         async getAllGroups() {
-            const res = await apiClient.admin.getAllGroups()
-            this.groups = res
+            this.groups = await apiClient.admin.getAllGroups()
+        },
+
+        //post
+        async createStudent(payload: IAdminRequestPost) {
+            const res = await apiClient.admin.createStudents(payload)
+            await message.success(res.message)
+            await this.getAllStudents()
+        },
+
+        //edit
+        async editStudent(id: string, payload: IAdminRequestPost) {
+            await apiClient.admin.editStudent(id, payload)
+        },
+
+        //delete
+        async deleteStudent(id) {
+            await apiClient.admin.deleteStudent(id)
+            await message.success("Ma'lumot o'chirildi")
+            await this.getAllStudents()
         }
     },
-    getters: {
-
-    }
+    getters: {}
 })

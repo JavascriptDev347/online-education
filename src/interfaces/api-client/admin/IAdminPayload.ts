@@ -17,7 +17,7 @@ export interface IAdminPayloadGet {
     count: number
 }
 
-interface IStudent {
+export interface IStudent {
     _id: string,
     first_name: string,
     last_name: string,

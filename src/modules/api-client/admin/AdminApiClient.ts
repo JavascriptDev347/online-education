@@ -1,5 +1,12 @@
-import { IAdminApiClient, IAdminApiClientUrls, IAdminPayloadGet, IAdminPayloadPost, IAdminRequestPost, IHttpRequestParams } from "@/interfaces";
-import { HttpClient } from "@/modules/http-client";
+import {
+    IAdminApiClient,
+    IAdminApiClientUrls,
+    IAdminPayloadGet,
+    IAdminPayloadPost,
+    IAdminRequestPost,
+    IHttpRequestParams, IStudent
+} from "@/interfaces";
+import {HttpClient} from "@/modules/http-client";
 
 export class AdminApiClient implements IAdminApiClient {
     private readonly urls!: IAdminApiClientUrls;
@@ -16,7 +23,15 @@ export class AdminApiClient implements IAdminApiClient {
         return HttpClient.get<IAdminPayloadGet>(requestParams)
     }
 
-    createStudens(payload: IAdminRequestPost): Promise<IAdminPayloadPost> {
+    getStudentById(id: string): Promise<IStudent> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.getStudentById
+        }
+
+        return HttpClient.get(requestParams)
+    }
+
+    createStudents(payload: IAdminRequestPost): Promise<IAdminPayloadPost> {
         const requestParams: IHttpRequestParams = {
             url: this.urls.createStudent,
             payload
@@ -34,26 +49,43 @@ export class AdminApiClient implements IAdminApiClient {
     }
 
     getAllCourses(): Promise<void> {
-        const requesParams: IHttpRequestParams = {
+        const requestParams: IHttpRequestParams = {
             url: this.urls.getAllCourses
         }
 
-        return HttpClient.get<void>(requesParams)
+        return HttpClient.get<void>(requestParams)
     }
 
     getAllRooms(): Promise<void> {
-        const requesParams: IHttpRequestParams = {
+        const requestParams: IHttpRequestParams = {
             url: this.urls.getAllRooms
         }
 
-        return HttpClient.get<void>(requesParams)
+        return HttpClient.get<void>(requestParams)
     }
 
     getAllGroups(): Promise<void> {
-        const requesParams: IHttpRequestParams = {
+        const requestParams: IHttpRequestParams = {
             url: this.urls.getAllGroups
         }
 
-        return HttpClient.get<void>(requesParams)
+        return HttpClient.get<void>(requestParams)
+    }
+
+    deleteStudent(id: string): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.deleteStudent + "/" + id
+        }
+
+        return HttpClient.delete<void>(requestParams)
+    }
+
+    editStudent(payload: IAdminRequestPost): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.editStudent + "/" + payload._id,
+            payload
+        }
+
+        return HttpClient.put<void>(requestParams)
     }
 }

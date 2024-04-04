@@ -13,20 +13,12 @@ export const useDirectorStore = defineStore({
     },
     actions: {
         async getAllStaffs() {
-            try {
-                this.staffs = await apiClient.director.getAllStaffs()
-            } catch (error) {
-                console.log("er", error);
-            }
+            this.staffs = await apiClient.director.getAllStaffs()
+
         },
         async createStaff(payload: IDirectorReq) {
-            try {
-                const { staff } = await apiClient.director.createStaff(payload)
-                await message.success(`Success ${staff.first_name}`)
-                this.errorStatus = false
-            } catch (error: any) {
-                this.errorStatus = true
-            }
+            const {staff} = await apiClient.director.createStaff(payload)
+            await message.success(`Success ${staff.first_name}`)
         },
         async activeStaff(payload: any) {
             await apiClient.director.activeStaff(payload)
@@ -34,16 +26,10 @@ export const useDirectorStore = defineStore({
             await message.success("Success")
         },
         async deleteStaff(id: string) {
-            try {
-                await apiClient.director.deleteStaff(id);
-                await this.getAllStaffs()
-            } catch (error) {
-                console.log("er", error);
+            await apiClient.director.deleteStaff(id);
+            await this.getAllStaffs()
 
-            }
         }
     },
-    getters: {
-
-    }
+    getters: {}
 })

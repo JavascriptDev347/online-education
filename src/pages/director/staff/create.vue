@@ -62,7 +62,6 @@ import { Form } from 'ant-design-vue';
 
 const { roles } = storeToRefs(useRolesStore());
 
-
 const props = defineProps<{
     isOpen: boolean,
     onClose: () => void
@@ -85,13 +84,8 @@ const size = ref(false)
 
 const updateScreenWidth = () => {
     screenWidth.value = window.innerWidth;
-    if (screenWidth.value > 786) {
-        size.value = true
-    } else {
-        size.value = false
-    }
+    size.value = screenWidth.value > 786;
 };
-
 
 onMounted(() => {
     window.addEventListener('resize', updateScreenWidth);
