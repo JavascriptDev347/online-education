@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {apiClient} from "@/modules";
-import {IAdminPayloadGet, IAdminRequestPost, ICreateCourse} from '@/interfaces';
+import {IAddGroupStudent, IAdminPayloadGet, IAdminRequestPost, ICreateCourse} from '@/interfaces';
 import {message} from 'ant-design-vue';
 
 export const useAdminStore = defineStore({
@@ -44,6 +44,11 @@ export const useAdminStore = defineStore({
             await this.getAllCourses()
         },
 
+        async addGroupStudent(payload: IAddGroupStudent) {
+            await apiClient.admin.addGroupStudent(payload);
+            await message.success("Yangi student guruhga qo'shildi")
+            await this.getAllGroups();
+        },
         //edit
         async editStudent(id: string, payload: IAdminRequestPost) {
             await apiClient.admin.editStudent(id, payload)

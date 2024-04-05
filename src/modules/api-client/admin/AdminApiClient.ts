@@ -1,4 +1,5 @@
 import {
+    IAddGroupStudent,
     IAdminApiClient,
     IAdminApiClientUrls,
     IAdminPayloadGet,
@@ -115,5 +116,11 @@ export class AdminApiClient implements IAdminApiClient {
         return HttpClient.get<void>(requestParams)
     }
 
-
+    addGroupStudent(payload: IAddGroupStudent): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.addGroupStudent,
+            payload
+        }
+        return HttpClient.post<void>(requestParams)
+    }
 }

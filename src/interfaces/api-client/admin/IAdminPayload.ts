@@ -44,3 +44,9 @@ export interface ICreateCourse {
 export interface IDeletePayload {
     message: string
 }
+
+//group
+export interface IAddGroupStudent {
+    group: string
+    student_phone: string
+}

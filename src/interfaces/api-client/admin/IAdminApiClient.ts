@@ -1,4 +1,5 @@
 import {
+    IAddGroupStudent,
     IAdminPayloadGet,
     IAdminPayloadPost,
     ICoursePayload,
@@ -25,4 +26,5 @@ export interface IAdminApiClient {
     getAllRooms: () => Promise<void>
 
     getAllGroups: () => Promise<void>
+    addGroupStudent: (payload: IAddGroupStudent) => Promise<void>
 }

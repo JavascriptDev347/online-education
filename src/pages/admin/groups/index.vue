@@ -28,7 +28,6 @@
         </h2>
       </template>
     </a-table>
-
     <a-modal v-model:open="modalOpen" title="Group add Student" :footer="null">
       <a-select
           v-model:value="studentPhone"
@@ -39,11 +38,12 @@
           :show-search="true"
           @search="studentSearch"
       >
-        <a-select-option v-for="student in data.length>0?data:lists['students']" :key="student._id"
+        <a-select-option v-for="student in data" :key="student._id"
                          :value="student.phone">
           {{ student.phone }}
         </a-select-option>
       </a-select>
+      <a-button :disabled="!studentPhone" @click="handleAddStudent">Qo'shish</a-button>
     </a-modal>
   </div>
 </template>
@@ -51,31 +51,45 @@
 <script setup lang="ts">
 import {useAdminStore} from '@/stores/admin/admin';
 import {storeToRefs} from 'pinia';
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {UserAddOutlined} from "@ant-design/icons-vue";
 
 const {groups} = storeToRefs(useAdminStore());
+
 const modalOpen = ref(false);
 const studentPhone = ref("")
 
-const {lists} = storeToRefs(useAdminStore());
-
 onMounted(async () => {
   await useAdminStore().getAllGroups()
-  await useAdminStore().getAllStudents()
 })
-let data = [];
+
+let data = ref([]);
+const groupId = ref("")
+watch(modalOpen, async (newV) => {
+  if (newV) {
+    await useAdminStore().getAllStudents()
+    return data.value = (useAdminStore().lists.students)
+  }
+})
 
 const groupAddStudent = (id: string) => {
-  modalOpen.value = true
+  modalOpen.value = true;
+  groupId.value = id;
+
 }
 const studentSearch = (e) => {
   console.log("e", e)
-  data = lists?.value?.students.filter((student: { phone: string }) => {
-    return student.phone.toLowerCase().includes(e.toLowerCase())
+  data.value = data.value.map((s) => {
+    return s
   })
-  return data;
 }
+
+const handleAddStudent = async () => {
+  await useAdminStore().addGroupStudent({group: groupId.value, student_phone: studentPhone.value?.value})
+  modalOpen.value = false
+  studentPhone.value = ''
+}
+
 const columns = [
   {title: "Name", dataIndex: "name"},
   {title: "Start time", dataIndex: "start_time"},

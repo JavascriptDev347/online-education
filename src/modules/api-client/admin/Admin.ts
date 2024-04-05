@@ -18,6 +18,7 @@ const urls: IAdminApiClientUrls = {
     getAllRooms: "/rooms/all/{q}",
 
     getAllGroups: "/groups/all/{q}",
+    addGroupStudent:"/groups/add-student"
 
 }
 
