@@ -1,11 +1,11 @@
 import {
-    IAddGroupStudent,
+    IAddGroupStudent, IAddGroupTeacher,
     IAdminApiClient,
     IAdminApiClientUrls,
     IAdminPayloadGet,
     IAdminPayloadPost,
     IAdminRequestPost, ICoursePayload, ICreateCourse, IDeletePayload,
-    IHttpRequestParams, IStudent
+    IHttpRequestParams, ISearchStudent, ISearchTeacher, IStudent
 } from "@/interfaces";
 import {HttpClient} from "@/modules/http-client";
 
@@ -56,6 +56,15 @@ export class AdminApiClient implements IAdminApiClient {
         }
 
         return HttpClient.put<void>(requestParams)
+    }
+
+    searchStudent(phone: string): Promise<ISearchStudent> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.searchStudent,
+            payload: {phone}
+        }
+
+        return HttpClient.post<ISearchStudent>(requestParams)
     }
 
     getAllTeachers(): Promise<void> {
@@ -122,5 +131,29 @@ export class AdminApiClient implements IAdminApiClient {
             payload
         }
         return HttpClient.post<void>(requestParams)
+    }
+
+    addGroupTeacher(payload: IAddGroupTeacher): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.addGroupTeacher,
+            payload
+        }
+        return HttpClient.post<void>(requestParams)
+    }
+
+    groupAllStudents(groupId: string): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.groupAllStudents + "/" + groupId
+        }
+
+        return HttpClient.get(requestParams)
+    }
+
+    searchTeacher(phone: string): Promise<ISearchTeacher> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.searchTeacher,
+            payload: {phone}
+        }
+        return HttpClient.post<ISearchTeacher>(requestParams)
     }
 }

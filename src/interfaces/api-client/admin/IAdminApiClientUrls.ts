@@ -3,9 +3,11 @@ export interface IAdminApiClientUrls {
     getStudentById: string
     createStudent: string
     editStudent: string
+    searchStudent: string
     deleteStudent: string
 
     getAllTeachers: string
+    searchTeacher: string
 
     getAllCourses: string
     createCourse: string
@@ -15,7 +17,8 @@ export interface IAdminApiClientUrls {
     getAllRooms: string
 
     getAllGroups: string
-    addGroupStudent:string
-
+    addGroupStudent: string
+    addGroupTeacher: string
+    groupAllStudents: string
 
 }

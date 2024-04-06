@@ -1,10 +1,12 @@
 {
   "new": {
-    "student": "Add new student"
+    "student": "Add new student",
+    "course": "Add new Course"
   },
   "length": {
     "student": "Number of students",
-    "teacher": "Number of teachers"
+    "teacher": "Number of teachers",
+    "course": "Number of courses"
   },
   "table": {
     "student": {
@@ -12,6 +14,12 @@
       "last_name": "Last name",
       "phone": "Phone number",
       "start_date": "Start date",
+      "action": "Action"
+    },
+    "course": {
+      "name": "Name",
+      "price": "Price",
+      "period": "Period",
       "action": "Action"
     }
   },

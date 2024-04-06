@@ -1,10 +1,12 @@
 {
   "new": {
-    "student": "Yangi o'quvchi qo'shish"
+    "student": "Yangi o'quvchi qo'shish",
+    "course": "Yangi kurs qo'shish"
   },
   "length": {
     "student": "O'quvchilar soni",
-    "teacher": "Teacherlar soni"
+    "teacher": "Teacherlar soni",
+    "course": "Kurslar soni"
   },
   "table": {
     "student": {
@@ -12,6 +14,12 @@
       "last_name": "Familiyasi",
       "phone": "Telefon numeri",
       "start_date": "Boshlangan vaqti",
+      "action": "Boshqarish"
+    },
+    "course": {
+      "name": "Ism",
+      "price": "Narx",
+      "period": "Davomiyligi",
       "action": "Boshqarish"
     }
   },

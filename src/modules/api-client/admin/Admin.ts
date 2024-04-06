@@ -6,9 +6,11 @@ const urls: IAdminApiClientUrls = {
     getStudentById: "/admin/get-student",
     createStudent: "/admin/add-student",
     editStudent: "/admin/update-student",
+    searchStudent: "/students/search",
     deleteStudent: "/admin/delete-student",
 
     getAllTeachers: "/admin/get-teachers/{q}",
+    searchTeacher: "/teachers/search",
 
     getAllCourses: "/courses/all/{q}",
     createCourse: "/courses/create-course",
@@ -18,7 +20,9 @@ const urls: IAdminApiClientUrls = {
     getAllRooms: "/rooms/all/{q}",
 
     getAllGroups: "/groups/all/{q}",
-    addGroupStudent:"/groups/add-student"
+    addGroupStudent: "/groups/add-student",
+    addGroupTeacher: "/groups/add-teacher",
+    groupAllStudents:"/groups/all-students"
 
 }
 

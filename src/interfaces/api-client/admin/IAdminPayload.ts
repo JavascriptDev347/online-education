@@ -17,6 +17,15 @@ export interface IAdminPayloadGet {
     count: number
 }
 
+export interface ISearchStudent {
+    student: Array<IStudent>
+}
+
+
+export interface ISearchTeacher {
+    teacher: any
+}
+
 export interface IStudent {
     _id: string,
     first_name: string,
@@ -49,4 +58,9 @@ export interface IDeletePayload {
 export interface IAddGroupStudent {
     group: string
     student_phone: string
+}
+
+export interface IAddGroupTeacher {
+    group: string,
+    teacher: string
 }

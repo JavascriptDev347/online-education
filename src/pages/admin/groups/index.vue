@@ -3,11 +3,23 @@
     <a-table :columns="columns" :data-source="groups['groups']" :scroll="{ x: 800 }" :expand-column-width="80">
       <template #bodyCell="{ column, _, record }">
         <template v-if="column.dataIndex === 'action'">
-          <a-tooltip placement="topLeft" title="Guruhga student qo'shish">
-            <a-button class="flex items-center" @click="groupAddStudent(record._id)">
-              <UserAddOutlined/>
-            </a-button>
-          </a-tooltip>
+          <div class="flex gap-[3px]">
+            <a-tooltip placement="topLeft" title="Guruhga student qo'shish">
+              <a-button class="flex items-center" @click="groupAddStudent(record._id)">
+                <UsergroupAddOutlined/>
+              </a-button>
+            </a-tooltip>
+            <a-tooltip placement="topLeft" title="Guruhga Teacher biriktirish">
+              <a-button class="flex items-center" @click="groupAddTeacher(record._id)">
+                <UserAddOutlined/>
+              </a-button>
+            </a-tooltip>
+            <a-tooltip placement="topLeft" title="Guruhdagi studentlar">
+              <a-button class="flex items-center" @click="groupAllStudents(record._id)">
+                <TableOutlined/>
+              </a-button>
+            </a-tooltip>
+          </div>
         </template>
         <template v-if="column.dataIndex === 'status'">
           <span>{{ record.status }}</span>
@@ -28,6 +40,7 @@
         </h2>
       </template>
     </a-table>
+    <!--    student add modal-->
     <a-modal v-model:open="modalOpen" title="Group add Student" :footer="null">
       <a-select
           v-model:value="studentPhone"
@@ -43,8 +56,32 @@
           {{ student.phone }}
         </a-select-option>
       </a-select>
-      <a-button :disabled="!studentPhone" @click="handleAddStudent">Qo'shish</a-button>
+      <div class="flex mt-3 justify-end">
+        <a-button :disabled="!studentPhone" @click="handleAddStudent">Qo'shish</a-button>
+      </div>
     </a-modal>
+
+    <!--    teacher add modal-->
+    <a-modal v-model:open="modalOpen1" title="Group add Teacher" :footer="null">
+      <a-select
+          label-in-value
+          placeholder="Select Teacher"
+          style="width: 100%"
+          :filter-option="false"
+          :show-search="true"
+          @search="teacherSearch"
+      >
+        <a-select-option v-for="teacher in data1" :key="teacher._id"
+                         :value="teacher.phone">
+          {{ teacher.phone }}
+        </a-select-option>
+      </a-select>
+      <div class="flex mt-3 justify-end">
+        <a-button @click="handleAddTeacher">Qo'shish</a-button>
+      </div>
+    </a-modal>
+
+    <!--   group all student-->
   </div>
 </template>
 
@@ -52,42 +89,80 @@
 import {useAdminStore} from '@/stores/admin/admin';
 import {storeToRefs} from 'pinia';
 import {onMounted, ref, watch} from 'vue';
-import {UserAddOutlined} from "@ant-design/icons-vue";
+import {UserAddOutlined, UsergroupAddOutlined, TableOutlined} from "@ant-design/icons-vue";
+import {apiClient} from "@/modules";
 
-const {groups} = storeToRefs(useAdminStore());
-
+const {lists, groups, teachers} = storeToRefs(useAdminStore());
 const modalOpen = ref(false);
-const studentPhone = ref("")
+const modalOpen1 = ref(false);
+const studentPhone = ref("");
 
 onMounted(async () => {
   await useAdminStore().getAllGroups()
 })
 
 let data = ref([]);
-const groupId = ref("")
-watch(modalOpen, async (newV) => {
-  if (newV) {
-    await useAdminStore().getAllStudents()
-    return data.value = (useAdminStore().lists.students)
+let data1 = ref([]);
+const groupId = ref("");
+const teacher_id = ref('')
+
+const groupAddStudent = async (id: string) => {
+  modalOpen.value = true;
+  groupId.value = id;
+  await useAdminStore().getAllStudents();
+  data.value = lists.value.students
+}
+
+const groupAddTeacher = async (id: string) => {
+  modalOpen1.value = true;
+  groupId.value = id;
+  await useAdminStore().getAllTeachers();
+  data1.value = teachers.value.teachers
+}
+
+const studentSearch = async (e) => {
+  if (e.length > 11) {
+    const {student} = await apiClient.admin.searchStudent(e)
+    data.value = student
+  }
+}
+
+const teacherSearch = async (e) => {
+  if (e.length > 11) {
+    const {teacher} = await apiClient.admin.searchTeacher(e)
+    data1.value = teacher;
+    teacher_id.value = teacher[0]?._id
+  }
+}
+
+watch(modalOpen, (newV) => {
+  if (!newV) {
+    studentPhone.value = ""
+    data.value = lists.value.students
   }
 })
 
-const groupAddStudent = (id: string) => {
-  modalOpen.value = true;
-  groupId.value = id;
-
-}
-const studentSearch = (e) => {
-  console.log("e", e)
-  data.value = data.value.map((s) => {
-    return s
-  })
-}
-
+watch(modalOpen1, (newV) => {
+  if (!newV) {
+    data1.value = teachers.value.teachers
+  }
+})
 const handleAddStudent = async () => {
-  await useAdminStore().addGroupStudent({group: groupId.value, student_phone: studentPhone.value?.value})
   modalOpen.value = false
+  await useAdminStore().addGroupStudent({group: groupId.value, student_phone: studentPhone.value?.value})
   studentPhone.value = ''
+  data.value = lists.value.students
+  groupId.value = ""
+}
+
+const handleAddTeacher = async () => {
+  await useAdminStore().addGroupTeacher({teacher: teacher_id.value, group: groupId.value})
+  modalOpen1.value = false;
+  groupId.value = ""
+  teacher_id.value = ""
+}
+const groupAllStudents = async (id: string) => {
+   await apiClient.admin.groupAllStudents(id)
 }
 
 const columns = [

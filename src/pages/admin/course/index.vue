@@ -6,7 +6,7 @@
                   @click="setModalVisible(true)"
                   class="flex items-center justify-center bg-btn-default text-white hover:text-white">
           <PlusOutlined/>
-          Add Course
+          {{ t('new.course') }}
         </a-button>
 
         <div class="w-[200px] bg-bg-1 ">
@@ -30,7 +30,7 @@
       </template>
       <template #title>
         <h2 class="text-bold flex items-center justify-center text-xl ">
-          Jami kurslar soni : {{ courses["count"] }}
+          {{ t("length.course") }}: {{ courses["count"] }}
         </h2>
       </template>
     </a-table>
@@ -76,12 +76,14 @@
 <script setup lang="ts">
 import {useAdminStore} from '@/stores/admin/admin';
 import {storeToRefs} from 'pinia';
-import {onMounted, ref, reactive, watch} from 'vue';
+import {onMounted, ref, reactive, watch, computed} from 'vue';
 import {PlusOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons-vue";
 import {ICreateCourse} from "@/interfaces";
 import {Form, message} from "ant-design-vue";
 import {apiClient} from "@/modules";
+import {useI18n} from "vue-i18n";
 
+const {t} = useI18n();
 const {courses} = storeToRefs(useAdminStore())
 const useForm = Form.useForm;
 const editOrCreate = ref<boolean>(false)
@@ -90,12 +92,12 @@ onMounted(async () => {
   await useAdminStore().getAllCourses()
 });
 
-const columns = [
-  {title: "Name", dataIndex: "name"},
-  {title: "Price", dataIndex: "price"},
-  {title: "Period", dataIndex: "period"},
-  {title: "Action", dataIndex: "action"},
-];
+const columns = computed(() => [
+  {title: t("table.course.name"), dataIndex: "name"},
+  {title: t("table.course.price"), dataIndex: "price"},
+  {title: t("table.course.period"), dataIndex: "period"},
+  {title: t("table.course.action"), dataIndex: "action"},
+]);
 
 const modalVisible = ref<boolean>(false);
 const setModalVisible = (open: boolean) => {
