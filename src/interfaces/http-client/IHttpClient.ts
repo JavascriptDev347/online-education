@@ -1,13 +1,13 @@
-import { IHttpRequestParams } from "./IHttpRequestParams"
+import {IHttpRequestParams} from "./IHttpRequestParams"
 
 export interface IHttpClient {
-    get<T>(paramters: IHttpRequestParams): Promise<T>
+    get<T>(parameters: IHttpRequestParams): Promise<T>
 
     //post
     post<T>(parameters: IHttpRequestParams): Promise<T>
 
     //put
-    put<T>(paramters: IHttpRequestParams): Promise<T>
+    put<T>(parameters: IHttpRequestParams): Promise<T>
 
     //delete
     delete<T>(parameters: IHttpRequestParams): Promise<T>

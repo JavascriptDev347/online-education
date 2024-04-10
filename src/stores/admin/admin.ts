@@ -20,6 +20,7 @@ export const useAdminStore = defineStore({
             this.lists = await apiClient.admin.getAllStudents()
         },
         async getAllTeachers() {
+            console.log(await apiClient.admin.getAllTeachers())
             this.teachers = await apiClient.admin.getAllTeachers()
         },
         async getAllCourses() {

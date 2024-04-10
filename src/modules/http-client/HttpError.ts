@@ -1,12 +1,9 @@
-import { AxiosError } from "axios";
-import { message } from 'ant-design-vue';
+import {AxiosError} from "axios";
+import {message} from 'ant-design-vue';
 
 
 export const HttpClientError = async (error: AxiosError | any) => {
-
-    console.info('------ handling errors ----', error);
-    const { response, code } = error;
-
+    const {response, code} = error;
     let errorMessage = 'Aniqlanmagan xato';
 
     //400,401,404,network error,
@@ -19,9 +16,6 @@ export const HttpClientError = async (error: AxiosError | any) => {
     } else if (code === 'ERR_CANCELED') {
         errorMessage = 'Connection canceled..'
     }
-
-    // Notification(errorMessage, 'danger');
-    console.log("er", errorMessage);
     const info = () => {
         message.error(errorMessage, 5);
     };

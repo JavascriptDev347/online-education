@@ -1,31 +1,31 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { IHttpClient, IHttpRequestParams } from "../../interfaces";
+import {AxiosError, AxiosResponse} from "axios";
+import {IHttpClient, IHttpRequestParams} from "@/interfaces";
 import http from "../../plugins/http";
-import { HttpClientError } from ".";
+import {HttpClientError} from ".";
 
 export class HttpClientModel implements IHttpClient {
-    get<T>(paramters: IHttpRequestParams): Promise<T> {
+    get<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise<T>((resolve, reject) => {
-            const { url, params } = paramters;
+            const {url, params} = parameters;
             try {
-                http.get(url, { params }).then((response: AxiosResponse) => {
+                http.get(url, {params}).then((response: AxiosResponse) => {
                     resolve(response as T)
                     console.log("response", response)
                 }).catch((error: AxiosError) => {
                     console.info('------ rejecting ----', error);
                     HttpClientError(error)
                     reject(error);
+                }).finally(() => {
                 })
             } catch (error) {
                 console.log("cacth error", error);
-
             }
         })
     }
 
     post<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise((resolve, reject) => {
-            const { url, payload } = parameters;
+            const {url, payload} = parameters;
             try {
                 http.post(url, payload).then((response: AxiosResponse) => {
                     resolve(response as T)
@@ -48,7 +48,6 @@ export class HttpClientModel implements IHttpClient {
                 url,
                 payload,
             } = parameters;
-
             try {
                 http.put(url, payload)
                     .then((response: AxiosResponse) => {
@@ -61,13 +60,15 @@ export class HttpClientModel implements IHttpClient {
                     });
             } catch (e) {
                 console.log("try catch error", e)
+            } finally {
+
             }
         });
     }
 
     delete<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise((resolve, reject) => {
-            const { url, params } = parameters;
+            const {url, params} = parameters;
             try {
                 http.delete(url, params).then((response: AxiosResponse) => {
                     resolve(response as T)

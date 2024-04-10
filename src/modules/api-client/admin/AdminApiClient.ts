@@ -4,7 +4,7 @@ import {
     IAdminApiClientUrls,
     IAdminPayloadGet,
     IAdminPayloadPost,
-    IAdminRequestPost, ICoursePayload, ICreateCourse, IDeletePayload,
+    IAdminRequestPost, ICoursePayload, ICreateCourse, IDeleteGroupIdStudent, IDeletePayload,
     IHttpRequestParams, ISearchStudent, ISearchTeacher, IStudent
 } from "@/interfaces";
 import {HttpClient} from "@/modules/http-client";
@@ -13,7 +13,7 @@ export class AdminApiClient implements IAdminApiClient {
     private readonly urls!: IAdminApiClientUrls;
 
     constructor(urls: IAdminApiClientUrls) {
-        this.urls = urls
+        this.urls = urls;
     }
 
     getAllStudents(): Promise<IAdminPayloadGet> {
@@ -22,6 +22,7 @@ export class AdminApiClient implements IAdminApiClient {
         }
 
         return HttpClient.get<IAdminPayloadGet>(requestParams)
+
     }
 
     getStudentById(id: string): Promise<IStudent> {
@@ -147,6 +148,15 @@ export class AdminApiClient implements IAdminApiClient {
         }
 
         return HttpClient.get(requestParams)
+    }
+
+    deleteGroupIdStudent(payload: IDeleteGroupIdStudent): Promise<void> {
+        const requestParams: IHttpRequestParams = {
+            url: this.urls.deleteGroupIdStudent,
+            payload
+        }
+
+        return HttpClient.delete<void>(requestParams)
     }
 
     searchTeacher(phone: string): Promise<ISearchTeacher> {

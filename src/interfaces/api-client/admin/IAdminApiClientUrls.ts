@@ -20,5 +20,6 @@ export interface IAdminApiClientUrls {
     addGroupStudent: string
     addGroupTeacher: string
     groupAllStudents: string
+    deleteGroupIdStudent: string
 
 }

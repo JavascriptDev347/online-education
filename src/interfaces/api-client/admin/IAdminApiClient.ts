@@ -3,7 +3,7 @@ import {
     IAdminPayloadGet,
     IAdminPayloadPost,
     ICoursePayload,
-    ICreateCourse,
+    ICreateCourse, IDeleteGroupIdStudent,
     IDeletePayload, ISearchStudent, ISearchTeacher,
     IStudent
 } from "./IAdminPayload";
@@ -31,4 +31,5 @@ export interface IAdminApiClient {
     addGroupStudent: (payload: IAddGroupStudent) => Promise<void>
     addGroupTeacher: (payload: IAddGroupTeacher) => Promise<void>
     groupAllStudents: (groupId: string) => Promise<void>
+    deleteGroupIdStudent: (payload:IDeleteGroupIdStudent) => Promise<void>
 }

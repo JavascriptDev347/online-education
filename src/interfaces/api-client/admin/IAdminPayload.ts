@@ -64,3 +64,8 @@ export interface IAddGroupTeacher {
     group: string,
     teacher: string
 }
+
+export interface IDeleteGroupIdStudent {
+    group: string,
+    student_phone: string
+}

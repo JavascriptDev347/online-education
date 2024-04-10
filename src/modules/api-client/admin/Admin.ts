@@ -22,7 +22,8 @@ const urls: IAdminApiClientUrls = {
     getAllGroups: "/groups/all/{q}",
     addGroupStudent: "/groups/add-student",
     addGroupTeacher: "/groups/add-teacher",
-    groupAllStudents:"/groups/all-students"
+    groupAllStudents:"/groups/all-students",
+    deleteGroupIdStudent:"/groups/delete-student"
 
 }
 

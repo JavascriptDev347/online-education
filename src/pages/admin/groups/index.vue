@@ -82,6 +82,26 @@
     </a-modal>
 
     <!--   group all student-->
+    <a-modal v-model:open="groupAllStudentModal" :footer="null">
+      <div class="my-6" v-if="groupIdStudents?.students.length >0">
+        <a-collapse accordion>
+          <a-collapse-panel v-for="student in groupIdStudents?.students" :key="student._id"
+                            :header="student.phone">
+            <div class="flex justify-between items-center">
+              <p>{{ student.first_name + ' ' + student.last_name }}</p>
+              <a-button danger @click="deleteGroupIdByStudent(student.phone)">Delete</a-button>
+              <!--              <span>{{ student._id }}</span>-->
+            </div>
+          </a-collapse-panel>
+        </a-collapse>
+      </div>
+      <div class="my-6" v-else-if="groupIdStudents?.students.length===0">
+        Bu guruhda studentlar mavjud emas.
+      </div>
+      <div class="my-6" v-else>
+        <a-skeleton active/>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -96,6 +116,8 @@ const {lists, groups, teachers} = storeToRefs(useAdminStore());
 const modalOpen = ref(false);
 const modalOpen1 = ref(false);
 const studentPhone = ref("");
+const groupAllStudentModal = ref(false);
+const groupIdStudents = ref()
 
 onMounted(async () => {
   await useAdminStore().getAllGroups()
@@ -137,16 +159,26 @@ const teacherSearch = async (e) => {
 
 watch(modalOpen, (newV) => {
   if (!newV) {
-    studentPhone.value = ""
+    studentPhone.value = "";
+    groupId.value = ""
     data.value = lists.value.students
   }
 })
 
 watch(modalOpen1, (newV) => {
   if (!newV) {
+    groupId.value = ""
     data1.value = teachers.value.teachers
   }
 })
+
+watch(groupId, (newV) => {
+  if (!newV) {
+    groupId.value = ""
+    groupIdStudents.value = []
+  }
+})
+
 const handleAddStudent = async () => {
   modalOpen.value = false
   await useAdminStore().addGroupStudent({group: groupId.value, student_phone: studentPhone.value?.value})
@@ -162,7 +194,14 @@ const handleAddTeacher = async () => {
   teacher_id.value = ""
 }
 const groupAllStudents = async (id: string) => {
-   await apiClient.admin.groupAllStudents(id)
+  groupAllStudentModal.value = true;
+  groupId.value = id;
+  groupIdStudents.value = await apiClient.admin.groupAllStudents(id)
+}
+
+const deleteGroupIdByStudent = async (student_phone: string) => {
+  console.log(student_phone, groupId.value)
+  // await apiClient.admin.deleteGroupIdStudent({student_phone, group: groupId.value})
 }
 
 const columns = [
