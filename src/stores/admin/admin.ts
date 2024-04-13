@@ -1,7 +1,8 @@
 import {defineStore} from "pinia";
-import {apiClient} from "@/modules";
+import {apiClient, HttpClient} from "@/modules";
 import {IAddGroupStudent, IAddGroupTeacher, IAdminPayloadGet, IAdminRequestPost, ICreateCourse} from '@/interfaces';
 import {message} from 'ant-design-vue';
+import {useCrud} from "@/stores/crud";
 
 export const useAdminStore = defineStore({
     id: "admin",
@@ -15,9 +16,10 @@ export const useAdminStore = defineStore({
         }
     },
     actions: {
+
         //get
         async getAllStudents() {
-            this.lists = await apiClient.admin.getAllStudents()
+            this.lists = await apiClient.admin.getAllStudents();
         },
         async getAllTeachers() {
             console.log(await apiClient.admin.getAllTeachers())

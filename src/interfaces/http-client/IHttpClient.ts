@@ -11,4 +11,6 @@ export interface IHttpClient {
 
     //delete
     delete<T>(parameters: IHttpRequestParams): Promise<T>
+
+    isLoading(): boolean
 }

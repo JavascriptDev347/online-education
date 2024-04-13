@@ -54,6 +54,12 @@ export const menu = [
         role: ["admin"]
     },
     {
+        title: "Mening Kurslarim",
+        path: "/mycourses",
+        icon: "tdesign:course",
+        role: ["teacher"]
+    },
+    {
         title: "Profile",
         path: "/profile",
         icon: "ic:outline-settings",

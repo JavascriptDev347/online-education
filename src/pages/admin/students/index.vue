@@ -39,6 +39,7 @@
     <template #title>
       <h2 class="text-bold flex items-center justify-center text-xl ">
         {{ t('length.student') }} : {{ lists["count"] }}
+        {{ loading }}
       </h2>
     </template>
 
@@ -81,6 +82,7 @@ import createStudent from "./createStudent.vue";
 import moment from "moment";
 import {useI18n} from 'vue-i18n'
 import {useForm} from "ant-design-vue/es/form";
+import {HttpClient} from "@/modules";
 
 const {t} = useI18n();
 const open = ref<boolean>(false);
@@ -89,13 +91,13 @@ let form = reactive({
   first_name: "",
   last_name: "",
 });
+const loading = ref(HttpClient.isLoading())
 
 const showModal = (record) => {
   open.value = true;
   if (record) {
     Object.assign(form, record)
   }
-
 };
 
 const handleEdit = () => {
@@ -154,8 +156,6 @@ const rulesRef = reactive({
 
 const {validateInfos} = useForm(form, rulesRef);
 
-//
-
 const adminStore = useAdminStore();
 
 const {lists} = storeToRefs(adminStore);
@@ -166,8 +166,9 @@ const onSearch = () => {
 }
 
 onMounted(async () => {
-  await adminStore.getAllStudents()
+  await adminStore.getAllStudents();
 })
+
 
 const createOpen = ref<boolean>(false)
 

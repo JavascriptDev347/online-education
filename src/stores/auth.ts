@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
-import { IAuthRequest } from '../interfaces/api-client/auth/IAuthRequest';
-import { apiClient } from "@/modules";
+import {defineStore} from "pinia";
+import {IAuthRequest} from '@/interfaces';
+import {apiClient} from "@/modules";
 import router from "@/router";
 
 export const useAuthStore = defineStore({
@@ -17,8 +17,8 @@ export const useAuthStore = defineStore({
                 const response = await apiClient.auth.login(payload)
                 if (response?.tokens?.access_token) {
                     // this.user = response?.user
-                    localStorage.setItem("role", response?.user?.role)
-                    localStorage.setItem("token", response?.tokens?.access_token)
+                    localStorage.setItem("role", <string>response?.user?.role)
+                    localStorage.setItem("token", <string>response?.tokens?.access_token)
                 }
                 const role = response?.user?.role
                 if (role === "admin") {
@@ -26,6 +26,8 @@ export const useAuthStore = defineStore({
                     await router.push("/students")
                 } else if (role === "director") {
                     await router.push("/dashboard")
+                } else if (role === 'teacher') {
+                    await router.push("/mycourses")
                 }
             } catch (error) {
                 console.log("erro", error);
@@ -34,7 +36,5 @@ export const useAuthStore = defineStore({
 
         }
     },
-    getters: {
-
-    }
+    getters: {}
 })
