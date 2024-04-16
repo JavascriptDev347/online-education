@@ -19,6 +19,7 @@ export const useAuthStore = defineStore({
                     // this.user = response?.user
                     localStorage.setItem("role", <string>response?.user?.role)
                     localStorage.setItem("token", <string>response?.tokens?.access_token)
+                    localStorage.setItem("user", JSON.stringify(response?.user))
                 }
                 const role = response?.user?.role
                 if (role === "admin") {

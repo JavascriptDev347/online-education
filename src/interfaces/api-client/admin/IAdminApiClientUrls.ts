@@ -9,6 +9,7 @@ export interface IAdminApiClientUrls {
     getAllTeachers: string
     searchTeacher: string
 
+
     getAllCourses: string
     createCourse: string
     editCourse: string

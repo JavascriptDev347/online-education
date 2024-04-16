@@ -1,9 +1,10 @@
-import { IAdminApiClient } from "./admin";
-import { IAuthApiClient } from "./auth";
-import { IDirectorApiClient } from "./director";
-import { IProfileApiClient } from "./profile";
-import { IRolesApiClient } from "./roles";
-import { ISApiClient } from "./student";
+import {IAdminApiClient} from "./admin";
+import {IAuthApiClient} from "./auth";
+import {IDirectorApiClient} from "./director";
+import {IProfileApiClient} from "./profile";
+import {IRolesApiClient} from "./roles";
+import {ISApiClient} from "./student";
+import {ITeacherApiClient} from "./teacher";
 
 export interface IApiClient {
     auth: IAuthApiClient,
@@ -11,5 +12,6 @@ export interface IApiClient {
     admin: IAdminApiClient,
     director: IDirectorApiClient,
     roles: IRolesApiClient,
-    profile: IProfileApiClient
+    profile: IProfileApiClient,
+    teacher: ITeacherApiClient
 }

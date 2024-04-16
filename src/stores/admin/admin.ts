@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import {apiClient, HttpClient} from "@/modules";
 import {IAddGroupStudent, IAddGroupTeacher, IAdminPayloadGet, IAdminRequestPost, ICreateCourse} from '@/interfaces';
 import {message} from 'ant-design-vue';
-import {useCrud} from "@/stores/crud";
 
 export const useAdminStore = defineStore({
     id: "admin",
