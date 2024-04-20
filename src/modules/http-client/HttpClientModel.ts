@@ -4,24 +4,18 @@ import http from "../../plugins/http";
 import {HttpClientError} from ".";
 
 export class HttpClientModel implements IHttpClient {
-    private loading: boolean = false;
 
     get<T>(parameters: IHttpRequestParams): Promise<T> {
-        this.loading = true
         return new Promise<T>((resolve, reject) => {
             const {url, params} = parameters;
             try {
                 http.get(url, {params}).then((response: AxiosResponse) => {
                     resolve(response as T);
-                    this.loading = false;
                     console.log("response", response)
                 }).catch((error: AxiosError) => {
-                    this.loading = false;
                     console.info('------ rejecting ----', error);
                     HttpClientError(error)
                     reject(error);
-                }).finally(() => {
-                    this.loading = false;
                 })
             } catch (error) {
                 console.log("cacth error", error);
@@ -31,9 +25,9 @@ export class HttpClientModel implements IHttpClient {
 
     post<T>(parameters: IHttpRequestParams): Promise<T> {
         return new Promise((resolve, reject) => {
-            const {url, payload} = parameters;
+            const {url, payload, config} = parameters;
             try {
-                http.post(url, payload).then((response: AxiosResponse) => {
+                http.post(url, payload, config).then((response: AxiosResponse) => {
                     resolve(response as T)
                     console.log('post', response)
                 }).catch((error: AxiosResponse) => {
@@ -89,7 +83,5 @@ export class HttpClientModel implements IHttpClient {
         })
     }
 
-    isLoading(): boolean {
-        return this.loading;
-    }
+
 }

@@ -4,6 +4,7 @@ export default {
         "./index.html",
         "./src/**/*.{vue,js,ts,jsx,tsx}",
     ],
+    important: true,
     darkMode: 'class',
     theme: {
         extend: {
@@ -25,6 +26,11 @@ export default {
                 },
                 btn: {
                     default: '#235EE8'
+                },
+                dark: {
+                    menu: '#101018',
+                    menu_item: '#272B30',
+                    header_lan: '#1C1D28'
                 }
             }
         },

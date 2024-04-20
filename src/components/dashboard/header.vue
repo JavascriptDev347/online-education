@@ -55,7 +55,8 @@ const changeDarkLight = () => {
       justify-between
       px-6
       py-2
-      border-b border-br-1 
+      border-b border-br-1
+      dark:bg-dark-menu
 ">
     <div class="flex items-center">
       <button @click="isOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
@@ -66,7 +67,7 @@ const changeDarkLight = () => {
       </button>
     </div>
 
-    <div class="flex items-center gap-[10px]">
+    <div class="flex items-center gap-[10px] ">
       <a-select style="width: 130px" v-model:value="locale" @change="selectLanguages">
         <a-select-option v-for="language in languages" :value="language.value">
           <div class="flex items-center align-center gap-[2px]">

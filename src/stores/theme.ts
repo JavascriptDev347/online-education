@@ -15,6 +15,9 @@ export const useThemeStore = defineStore('theme', {
             message.warn("Coming sooon!!!")
         },
         loadTheme() {
+            if (!localStorage.getItem("theme")) {
+                localStorage.setItem("theme", "light")
+            }
             this.darkMode = localStorage.theme === 'dark' || !('theme' in localStorage);
             if (this.darkMode || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
