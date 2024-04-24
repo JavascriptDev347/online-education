@@ -12,7 +12,6 @@ export const useThemeStore = defineStore('theme', {
         toggleTheme() {
             localStorage.theme = this.darkMode ? 'dark' : 'light';
             this.loadTheme();
-            message.warn("Coming sooon!!!")
         },
         loadTheme() {
             if (!localStorage.getItem("theme")) {

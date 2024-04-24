@@ -39,7 +39,6 @@
     <template #title>
       <h2 class="text-bold flex items-center justify-center text-xl ">
         {{ t('length.student') }} : {{ lists["count"] }}
-        {{ loading }}
       </h2>
     </template>
 
@@ -91,7 +90,6 @@ let form = reactive({
   first_name: "",
   last_name: "",
 });
-const loading = ref(HttpClient.isLoading())
 
 const showModal = (record) => {
   open.value = true;
